@@ -4,3 +4,5 @@ console.log("서울");
 
 console.log("Park Jieun")
 
+console.log("도쿄");
+
