@@ -1,0 +1,78 @@
+// Product 클래스
+class Product {
+  constructor(name, description, price, tags, images) {
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.tags = tags;
+    this.images = images;
+    this._favoriteCount = 0;
+  }
+  favorite() {
+    this._favoriteCount += 1;
+  }
+  set favoriteCount(value) {
+    throw new Error("favorite를 다시 호출해주세요.");
+  }
+  get favoriteCount() {
+    return this._favoriteCount;
+  }
+}
+
+// ElectronicProduct 클래스
+// Product를 상속, manufacturer(제조사) 프로퍼티 추가
+class ElectronicProduct extends Product {
+  constructor(
+    name,
+    description,
+    price,
+    tags,
+    images,
+    favoriteCount,
+    manufacturer
+  ) {
+    super(name, description, price, tags, images, favoriteCount, manufacturer);
+    this.manufacturer = manufacturer;
+  }
+}
+
+// Article 클래스
+class Article {
+  constructor(title, content, writer) {
+    this.title = title;
+    this.content = content;
+    this.writer = writer;
+    this._likeCount = 0;
+  }
+  like() {
+    this._likeCount += 1;
+  }
+  set likeCount(value) {
+    throw new Error("like를 다시 호출해주세요.");
+  }
+  get likeCount() {
+    return this._likeCount;
+  }
+}
+
+// Article API를 이용
+// getArticleList() : GET 메소드
+import axios from "axios";
+
+function getArticleList() {
+  axios
+    .get(`https://panda-market-api-crud.vercel.app/articles`)
+    .then((res) => {
+      if (!res.ok) {
+        console.error("에러 발생 : ", res.status, res.statusText);
+        throw new Error("네트워크 응답이 실패했습니다.");
+      }
+      return res.json();
+    })
+    .then((body) => {
+      console.log(body);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
